@@ -18,22 +18,22 @@ Enquanto o @Yagamii vai desenvolver dentro da branch MASTER, eu (@aledefreitas) 
 
 ## Sobre o Sistema
 O sistema irá consistir em um portal de notícias de Games gerenciado por um CMS (Content Management System), que possuirá os seguintes módulos
-    - Gerenciamento de Notícias
-		- Elas devem possuir categorias
-	- Gerenciamento de Categorias
-	- Gerenciamento de Usuários
-		- Níveis de permissão:
-			- Usuário comum
-			- Moderador da comunidade
-			- Administrador
+- Gerenciamento de Notícias
+   - Elas devem possuir categorias
+- Gerenciamento de Categorias
+- Gerenciamento de Usuários
+   - Níveis de permissão:
+      - Usuário comum
+      - Moderador da comunidade
+      - Administrador
 
 O sistema contará, também com:
-	- Listagem de Notícias
-	- Categorização de notícias
-	- Cadastro de usuários;
-	   - Com autenticação (Login)
-	- Comentários;
-	- Moderação;
-	- Avaliação de notícias pelos usuários (Gostei/Não gostei)
+- Listagem de Notícias
+- Categorização de notícias
+- Cadastro de usuários;
+   - Com autenticação (Login)
+- Comentários;
+- Moderação;
+- Avaliação de notícias pelos usuários (Gostei/Não gostei)
 
 Detalhes sobre cada componente serão explorados de forma mais detalhada nos issues. 
