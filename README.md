@@ -38,7 +38,7 @@ O sistema contará, também com:
 
 Detalhes sobre cada componente serão explorados de forma mais detalhada nos issues. 
 
-## REQUISITOS
+## Requisitos para o futuro (após terminar primeira fase)
 - Deverá utilizar PHP Orientado a Objetos, com MVC (Darei exemplos e ensinarei a fazer)
 - Deverá utilizar PDO
 
