@@ -2,8 +2,10 @@
 	$titulo_pagina = "Registro";
 	include ('header.html');
 	
+	ini_set("display_errors", 1);
 	
 	if(isset($_POST['submitted'])){
+		
 		//array para guardar erros ocorridos
 		$erros = array();
 		
@@ -40,7 +42,7 @@
 			if($_POST['senha'] != $_POST['csenha']){
 				$erros[] = 'Sua senha está diferente da confirmação de senha.';
 			}else{
-				$senha = trim($_POST['senha']);
+				$senha = md5(trim($_POST['senha']));
 			}
 		}else{
 			$erros[] = 'Você não inseriu sua senha.';
@@ -48,10 +50,10 @@
 		
 		//Caso a variavel de erros estiver correta, prosseguir com o cadastro
 		if(empty($erros)){
-			require_once('../mysqli_phpconnect.php');
+			require_once '../mysqli_phpconnect.php';
 			
-			$q = "INSERT INTO usuarios (nome, sobrenome, usuario, pass, email, data_registro) VALUES ('$nome', '$snome', '$usuario', SHA1('$senha'), $email, NOW() )";
-			$r = @mysqli_query ($dbc, $q);
+			$q = "INSERT INTO usuarios (nome, sobrenome, usuario, pass, email, data_registro) VALUES ('$nome', '$snome', '$usuario', '$senha', '$email', NOW())";
+			$r = mysqli_query ($dbc, $q);
 			
 			if($r){
 				echo '<h1>Parabéns</h1>
@@ -61,6 +63,10 @@
 					<p>Você não pôde se registrar devido a um erro do sistema. Pedimos desculpa pela inconveniencia.</p>';
 				echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
 			}
+		}else{
+			foreach($erros as $erro){
+				echo '<ul><li> <p class="error">'. $erro .'</p></li></ul>';
+			}
 		}
 	}
 	
@@ -69,7 +75,7 @@
 
 <h1 align="center">Registro</h1>
 	<div align="center"><form name="registro" action="registro.php" method="POST">
-    <table border="0" >
+    <table border="0">
     <tr>
 		<td><p>Nome:</p></td>
     	<td><p><input type="text" name="nome" value="<?php if(isset($_POST['nome'])){ echo $_POST['nome'];} ?>" /></p></td>
@@ -97,7 +103,8 @@
 	<tr>
     	
     	
-        <td colspan="2"><p align="center"> <input type="hidden" name="submitted" />
+        <td colspan="2"><p align="center"> 
+        	<input type="hidden" name="submitted" value="TRUE" />
         	<input type="submit" value="Registrar" name="submit" />
        </p></td>
 	</table>
