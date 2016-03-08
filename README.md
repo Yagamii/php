@@ -37,3 +37,10 @@ O sistema contará, também com:
 - Avaliação de notícias pelos usuários (Gostei/Não gostei)
 
 Detalhes sobre cada componente serão explorados de forma mais detalhada nos issues. 
+
+## Requisitos para o futuro (após terminar primeira fase)
+- Deverá utilizar PHP Orientado a Objetos, com MVC (Darei exemplos e ensinarei a fazer)
+- Deverá utilizar PDO
+
+## Futuro
+Ao ser concluído, utilizaremos uma biblioteca de Cache e estudaremos maneiras de evoluir o sistema, para aprofundar mais o conhecimento e aumentar as chances de ser contratado para um cargo de programador.
