@@ -13,6 +13,7 @@
         <ul><li><a href="del_categoria.php">Deletar categoria</a></li></ul>
         <li>Conteúdo</li>
         <ul><li><a href="add_materia.php">Escrever matéria</a></li></ul>
+        <li><b><a href="logout.php">Logout</a></b></li>
     </ul>
 
 <?php
