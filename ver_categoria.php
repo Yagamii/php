@@ -1,8 +1,10 @@
 <?php
+	$titulo_pagina = "Ver categoria";
 	include ('header.php');
 	
 	if(isset($_GET['cid'])){
 		$cid = $_GET['cid'];
+		
 		
 		require_once('../mysqli_phpconnect.php');
 		
@@ -13,20 +15,22 @@
 		
 		echo '<h1 align="center">'.$cnome['nome'].'</h1>';
 		
-		$q = "SELECT * FROM noticias INNER JOIN categoria ON noticias.categoria_id = categorias.categoria_id WHERE categorias.categoria_id='$cid' ORDER BY noticias.data_noticia DESC";
+		$q = "SELECT * FROM noticias INNER JOIN categorias ON noticias.categoria_id = categorias.categoria_id WHERE categorias.categoria_id='$cid' ORDER BY noticias.data_noticia DESC";
 		$r = mysqli_query($dbc, $q);
 		
 		
 		
-		if(@mysqli_num_rows > 0){
+		if(@mysqli_num_rows($r) > 0){
+				echo '<br />';
 			while($row = mysqli_fetch_array($r, MYSQLI_ASSOC)){
 				
-				$resumoCorpo = substr($row['corpo'], 0, strrpos(substr($row['corpo'], 0, 60), ' ')) . '...';
+				$resumoCorpo = substr($row['corpo'], 0, strrpos(substr($row['corpo'], 0, 400), ' ')) . '...';
 				
-				echo '<h2>'.$row['titulo'].'</h2>';
+				echo '<h2><a href="ver_noticia.php?nid='.$row['noticia_id'].'">'.$row['titulo'].'</a></h2>';
 				echo '<p>'.$resumoCorpo.'</p>';
-				echo '<p align="right"><a href="ver_noticia.php?nid='.$$row['noticia_id'].'">Ler mais.</a></p>';
+				echo '<p align="right"><a href="ver_noticia.php?nid='.$row['noticia_id'].'">Ler mais.</a></p>';
 			}
+			
 		}else{
 			echo '<p align="center">Não tem nenhuma noticia nesta categoria. :(</p>';
 		}
