@@ -2,11 +2,12 @@
 	$titulo_pagina = 'Ver noticia';
 	include('header.php');
 	
-	
-	
 	require_once('../mysqli_phpconnect.php');
 	//Verifica se possui um id de noticia
 	if(isset($_GET['nid'])){
+		//recebe id do usuario que está logado no momento
+		$uid = $_SESSION['usuario_id'];
+		//recebe a id da noticia
 		$nid = $_GET['nid'];
 		//Faz consulta em inner join com usuarios, para ter informação completa da noticia e nome do autor da noticia
 		$q = "SELECT *, DATE_FORMAT(data_noticia, '%d/%b/%Y') AS data FROM noticias INNER JOIN usuarios ON noticias.usuario_id = usuarios.usuario_id WHERE noticias.noticia_id = '$nid'";
@@ -29,8 +30,8 @@
 				}else{
 					$ava = $_POST['like'];
 			}
-			//recebe id do usuario que está logado no momento
-			$uid = $_SESSION['usuario_id'];
+			
+			
 			//se não tiver erros, seguir com a query para inserir dados na tabela
 			if(empty($erros)){
 				$q = "INSERT INTO avaliacao (usuario_id, avaliacao, noticia_id) VALUES ('$uid', '$ava', '$nid')";
@@ -44,13 +45,40 @@
 			}
 		
 		}
-			//formulario de avaliação, com 2 opçoes em radio, com curti = 1 e não curti = 2
-			echo '<form action="ver_noticia.php?nid='.$nid.'" method="post"><p align="right">
-				<input type="radio" name="like" value="1">Curti   |   <input type="radio" name="like" value="2">Não curti</p>
-				<div align="right" style="padding-right: 60px; padding-top: 5px"><input type="hidden" name="avaliar" value="TRUE" />
+		
+		//Verifica avaliações da noticia
+		$q = "SELECT * FROM avaliacao WHERE noticia_id = '$nid'";
+		$r = mysqli_query($dbc, $q);		
+			//faz verificação em loop em todos os valores retornados na consulta
+			while($avaresult = mysqli_fetch_array($r, MYSQLI_ASSOC)){
+				//verifica se aparece o id do usuario na lista de avaliações da noticia e verifica qual foi a avaliação do usuario, sendo 1 = curti e 2 = nao curti
+				if(($uid == $avaresult['usuario_id']) && ($avaresult['avaliacao'] == 1)){
+					//armazena voto na variavel votou que sera verificada posteriormente
+					$votou = 1;
+				}elseif(($uid == $avaresult['usuario_id']) && ($avaresult['avaliacao'] == 2)){
+					$votou = 2;
+				}
+			}
+			
+			//verifica variavel votou, vendo se usuario avaliou como 1 ou 2, se não consta variavel, exibe formulario para o mesmo avaliar a noticia
+			if(@$votou == 1){
+				echo '<div style="border-bottom: 1px dashed; padding-bottom: 7px"><p align="right"> <span style="color:#09F"> Curti </span>| Não curti</p></div>';
+			}elseif(@$votou == 2){
+				echo '<div style="border-bottom: 1px dashed; padding-bottom: 7px"><p align="right"> Curti | <span style="color: #C00"> Não curti </span></p></div>';
+			}else{
+				//formulario de avaliação, com 2 opçoes em radio, com curti = 1 e não curti = 2
+			echo '<form action="ver_noticia.php?nid='.$nid.'" method="post"><p align="right">';
+			echo '<input type="radio" name="like" value="1"> ';
+			echo 'Curti |   ';
+			echo '<input type="radio" name="like" value="2">';
+			echo 'Não curti</p>';
+			echo '<div align="right" style="padding-right: 60px; padding-top: 5px"><input type="hidden" name="avaliar" value="TRUE" />
 									<input type="submit" name="avaliacao" value="Avaliar" /> </div>
 				
 				</form></div>';
+			}
+		
+			
 			//titulo da area de comentarios
 			echo '<div style="border-bottom: 1px solid; padding-bottom: 15px ; margin-bottom: 10px"><br/><h2>Comentários</h2>';
 			//consulta para puxar todos os comentarios relacionados a noticia atual, com inner join a tabela de usuarios para puxar também o nome do usuario que comentou
