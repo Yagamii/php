@@ -8,6 +8,8 @@
 	if(isset($_POST['enviado'])){
 		$erros = array();
 		
+		$permitido = array ('image/jpeg', 'image/png', 'image/JPG', 'image/PNG');
+		
 		if(empty($_POST['titulo'])){
 			$erros[] = 'Campo de titulo em branco';
 		}else{
@@ -20,6 +22,14 @@
 			$co = $_POST['corpo'];
 		}
 		
+		if(in_array($_FILES['thumb']['type'], $permitido)){
+			if(move_uploaded_file($_FILES['thumb']['tmp_name'], "../includes/uploads/thumbnail/{$_FILES['thumb']['name']}")){
+				$thumb = $_FILES['thumb']['name'];
+			}
+		}else{
+			$erros[] = 'Você tentou enviar um arquivo com formato inválido.';
+		}
+		
 		if(empty($_POST['categoria'])){
 			$erros[] = 'Não escolheu uma categoria';
 		}else{
@@ -27,11 +37,13 @@
 		}
 		
 		if(empty($erros)){
-			$q = "UPDATE noticias SET titulo='$ti', corpo='$co', categoria_id='$cat' WHERE noticia_id='$nid'";
+			$q = "UPDATE noticias SET titulo='$ti', corpo='$co', thumbnail='$thumb', categoria_id='$cat' WHERE noticia_id='$nid'";
 			$r = mysqli_query($dbc, $q);
 			
 			if(mysqli_affected_rows($dbc) === 1){
 				echo '<p class="sucess">A notícia foi alterada com sucesso.</p>';
+			}else{
+				echo '<p class="error">A noticia não pode ser alterada devido a um erro no sistema!</p>';
 			}
 			
 		}else{
@@ -56,12 +68,18 @@
 				
 				echo '<h1 align="center">Editar notícia</h1>';
 				
-				echo '<div align="center"><br/><table ><form action="edit_noticia.php?nid='.$nid.'" name="editar" method="post">
+				echo '<div align="center"><br/><table ><form enctype="multipart/form-data" action="edit_noticia.php?nid='.$nid.'" name="editar" method="post">
 						<tr>
 							<td><p>Titulo: </p></td> <td><p> <input type="text" size="60px" name="titulo" value="'.$row['titulo'].'" /></p></td>
 						</tr>
 						<tr>
 							<td valign="top"><p>Corpo: </td> <td><p> <textarea name="corpo" cols="62" rows="12">'.$row['corpo'].'</textarea></p></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><img align="center" src="../includes/uploads/thumbnail/'.$row['thumbnail'].'" height="200" width="300" /></td>
+						</tr>
+						<tr>
+							<td><p>Thumb:</p></td> <td><p align="left"><input type="file" name="thumb" /></p></td>
 						</tr>
 						<tr>
 							<td> <p>Categoria:</p> </td> <td ><p align="left"><select name="categoria">';
