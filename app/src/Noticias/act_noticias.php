@@ -1,0 +1,3 @@
+<?php
+	$Noticias = new Noticias();
+?>
