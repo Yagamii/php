@@ -1,5 +1,5 @@
 <h1 align="center">Cadastro</h1>
-	<div align="center" id="cadastro"><form name="registro" action="registro.php" method="POST">
+	<div align="center" id="cadastro"><form name="registro" action="index.php?page=cadastro&action=cadastrar" method="POST">
     <table border="0">
     <tr>
 		<td><p>Nome:</p></td>
@@ -30,7 +30,7 @@
     	
         <td colspan="2"><p align="center"> 
         	<input type="hidden" name="submitted" value="TRUE" />
-        	<input type="submit" value="Registrar" name="submit" />
+        	<input type="submit" value="Cadastrar" name="submit" />
        </p></td>
 	</table>
     </form>
