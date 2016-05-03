@@ -44,6 +44,9 @@
 				return false;
 				}
 		}
+		
+		public function getUsuario($id){
+		}
 	}
 	
 ?>
