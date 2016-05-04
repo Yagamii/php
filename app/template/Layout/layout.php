@@ -23,7 +23,7 @@
 						}else{
             			echo '<div class="dropdown"><a href="#"><div class="dropbtn">'.$_SESSION['usuario'].'</div></a>
 								<div class="dropdown-content">
-									<a href="/php/edit_user.php?uid='.$_SESSION['usuario_id'].'">Editar dados</a>
+									<a href="index.php?page=usuario&id='.$_SESSION['usuario_id'].'">Editar dados</a>
 									<a href="index.php?page=login&action=logout">Logout</a>
 								</div>
 								</div>';}
@@ -36,12 +36,18 @@
     	<div id="content">
     		<?php 
 				
-				foreach(ErrorHandler::getError() as $erro){
-					echo '<p class="error" align="center">'.$erro.'</p>';
+				if(ErrorHandler::getError()){
+					foreach(ErrorHandler::getError() as $erro){
+						echo '<p class="error" align="center">'.$erro.'</p>';
+					}
+				}elseif(ErrorHandler::getSucess()){
+					foreach(ErrorHandler::getSucess() as $sucess){
+						echo '<p class="sucess">'.$sucess.'</p>';
+					}
 				}
 				
 				require_once("app/template/".ucfirst(Fuseaction)."/".strtolower(Fuseaction).".php");
-
+				
     		?>
     	</div>
     <div id="footer">
