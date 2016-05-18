@@ -18,15 +18,16 @@
             <li><a href="index.php?page=categorias">Categorias</a></li>
 			<li><a href="index.php?page=cadastro">Cadastro</a></li>
 			<li><?php if(isset($_SESSION['usuario_id'])){
-						if($_SESSION['nivel_usuario'] == 2){
-							echo '<a href="/php/painel/admin.php">Admin</a>';
-						}else{
             			echo '<div class="dropdown"><a href="#"><div class="dropbtn">'.$_SESSION['usuario'].'</div></a>
-								<div class="dropdown-content">
+								<div class="dropdown-content">';
+									if($_SESSION['nivel_usuario'] == 2){
+										echo '<a href="painel/index.php">Admin</a>';
+									}
+									echo '
 									<a href="index.php?page=usuario&id='.$_SESSION['usuario_id'].'">Editar dados</a>
 									<a href="index.php?page=login&action=logout">Logout</a>
 								</div>
-								</div>';}
+								</div>';
 						}else{ 
 						echo '<a href="index.php?page=login">Login</a>';
 						}

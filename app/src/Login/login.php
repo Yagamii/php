@@ -4,7 +4,7 @@
 		public function logar($user, $pass){	
 			try{
 				
-				$_user = mysqli_real_escape_string($this->Dbc->getConnection(),$user);
+				$_user = $this->verificarCampo($user);
 				$_pass = md5($pass);
 			
 				if(!$_user or !$_pass)

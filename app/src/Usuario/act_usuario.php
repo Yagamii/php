@@ -1,6 +1,6 @@
 <?php
 	$usuario = new Usuario();
-	$usuario->setId(id);
+	$usuario->setId($_GET['id']);
 	
 	$r = $usuario->getUser();
 	
