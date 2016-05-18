@@ -57,3 +57,7 @@ body {
 	font-weight: bold;
 	color: #C00
 }
+
+tr td{
+	text-align: center;
+}
