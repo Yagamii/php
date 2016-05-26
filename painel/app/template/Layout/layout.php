@@ -16,14 +16,14 @@
 <div id="sidebar">
 	<ul type="disc">
     	<li>Usuários</li>
-    	<ul><li><a href="ver_usuarios.php">Editar usuario</a></li></ul>
+    	<ul><li><a href="index.php?page=usuario">Editar usuario</a></li></ul>
         <li>Categoria</li>
-        <ul><li><a href="add_categoria.php">Adicionar categoria</a></li></ul>
-        <ul><li><a href="ver_cats.php">Editar categorias</a></li></ul>
+        <ul><li><a href="index.php?page=categoria&action=adicionar">Adicionar categoria</a></li></ul>
+        <ul><li><a href="index.php?page=categoria">Editar categorias</a></li></ul>
         <li>Conteúdo</li>
-        <ul><li><a href="add_noticia.php">Escrever notícia</a></li></ul>
-        <ul><li><a href="ver_nots.php">Editar notícia</a></li></ul>
-        <li><b><a href="../logout.php">Logout</a></b></li>
+        <ul><li><a href="index.php?page=noticia&action=adicionar">Escrever notícia</a></li></ul>
+        <ul><li><a href="index.php?page=noticia">Editar notícia</a></li></ul>
+        <li><b><a href="index.php?page=login&action=logout">Logout</a></b></li>
     	</ul>
 </div>
 <div id="content">
@@ -47,6 +47,9 @@
 </div>
 </div>
 <?php }else{ 
+	if(!isset($_GET['logado'])){
+	ErrorHandler::verificarUsuario($_SESSION['usuario_id']);
+	}
 	require_once("app/template/".ucfirst(Fuseaction)."/".strtolower(Fuseaction).".php");?>
 	
 <?php }?>

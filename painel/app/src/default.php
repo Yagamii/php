@@ -18,7 +18,7 @@
 			
 				if(in_array($imagem, $permitido)){					
 				
-					if(move_uploaded_file($tpmname, "app/template/includes/uploads/user/".$name."")){
+					if(move_uploaded_file($tpmname, "../app/template/includes/uploads/thumbnail/".$name."")){
 						$_image = $name;
 						
 						return $_image;

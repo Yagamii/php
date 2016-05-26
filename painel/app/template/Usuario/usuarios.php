@@ -1,5 +1,5 @@
 <h1 align="center">Lista de usuários</h1>
-	<br /><table align="center" cellspacing="2" cellpadding="5" width="100%">
+	<table align="center" cellspacing="2" cellpadding="5" width="100%">
 		<tr>
 			<td align="left"><b>Usuário</b></td>
 			<td align="left"><b>Nome</b></td>
